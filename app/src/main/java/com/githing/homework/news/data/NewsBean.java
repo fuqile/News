@@ -10,7 +10,7 @@ import java.io.Serializable;
  * @author pofeng <pofeng@wacai.com>
  * @date 2018/03/07
  */
-public class NewsBean implements Serializable{
+public class NewsBean implements Serializable {
 
     @JSONField(name = "title")
     private String title;
@@ -20,6 +20,9 @@ public class NewsBean implements Serializable{
 
     @JSONField(name = "date")
     private String date;
+
+    @JSONField(name = "url")
+    private String url;
 
     public String getTitle() {
         return title;
@@ -43,5 +46,13 @@ public class NewsBean implements Serializable{
 
     public void setDate(String date) {
         this.date = date;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
     }
 }

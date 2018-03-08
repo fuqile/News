@@ -1,4 +1,4 @@
-package com.githing.homework.news.view;
+package com.githing.homework.news.view.activity;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -7,6 +7,7 @@ import android.support.v7.widget.RecyclerView;
 
 import com.githing.homework.news.R;
 import com.githing.homework.news.data.DataSource;
+import com.githing.homework.news.view.adapter.NewsAdapter;
 
 public class MainActivity extends AppCompatActivity {
 

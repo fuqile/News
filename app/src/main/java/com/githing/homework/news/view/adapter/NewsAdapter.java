@@ -1,8 +1,8 @@
-package com.githing.homework.news.view;
+package com.githing.homework.news.view.adapter;
 
-import android.content.Context;
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,11 +10,9 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.GlideDrawable;
-import com.bumptech.glide.request.RequestListener;
-import com.bumptech.glide.request.target.Target;
 import com.githing.homework.news.R;
 import com.githing.homework.news.data.NewsBean;
+import com.githing.homework.news.view.activity.WebActivity;
 
 import java.util.List;
 
@@ -25,11 +23,11 @@ import java.util.List;
 public class NewsAdapter extends RecyclerView.Adapter {
 
     private List<NewsBean> datas;
-    private Context context;
+    private Activity activity;
 
-    public NewsAdapter(Context context, List<NewsBean> datas) {
+    public NewsAdapter(Activity activity, List<NewsBean> datas) {
         this.datas = datas;
-        this.context = context;
+        this.activity = activity;
     }
 
     @Override
@@ -40,21 +38,18 @@ public class NewsAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, int position) {
-        NewsBean newsBean = datas.get(position);
+        final NewsBean newsBean = datas.get(position);
         ((ViewHolder) holder).tvTitle.setText(newsBean.getTitle());
         ((ViewHolder) holder).tvDate.setText(newsBean.getDate());
-        Glide.with(context).load(newsBean.getImgUrl()).listener(new RequestListener<String, GlideDrawable>() {
+        Glide.with(activity).load(newsBean.getImgUrl()).into(((ViewHolder) holder).ivPic);
+        ((ViewHolder) holder).itemView.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onException(Exception e, String model, Target<GlideDrawable> target, boolean isFirstResource) {
-                Log.e("newAdapter", e.getMessage(), e);
-                return false;
+            public void onClick(View v) {
+                Intent intent = new Intent(activity, WebActivity.class);
+                intent.putExtra(WebActivity.KEY_URL, newsBean.getUrl());
+                activity.startActivity(intent);
             }
-
-            @Override
-            public boolean onResourceReady(GlideDrawable resource, String model, Target<GlideDrawable> target, boolean isFromMemoryCache, boolean isFirstResource) {
-                return false;
-            }
-        }).into(((ViewHolder) holder).ivPic);
+        });
     }
 
     @Override
